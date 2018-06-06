@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Simple Image Editor">
+    <meta name="keywords" content="JS Image Editor, image editor javascript, image editor opensource, simple image editor">
+    <meta name="author" content="Abdelhafidh Manager">
+
+    <title>Simple Image Editor - Abdelhafidh Manager</title>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../css/main.css" rel="stylesheet">
+    <link href="../css/fonts.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" crossorigin="anonymous">
+    <link href="../css/menu.css" rel="stylesheet">
+  </head>
+
+  <body class="editor">
+    <div id="overlay">
+        <div>
+            <h1 class="text-light">Simple Image Editor</h1>
+            <button id="startii" class="btn btn-select vlg">Import Image</button>
+            <button id="startsfs" class="btn btn-select vlg">Start From Scratch</button>
+            <h4 class="text-light">made with &hearts; by abdelhafidh.com</h4>
+        </div>
+    </div> 
+    
+    <div id="menu-bar" class="sticky-top">
+      <ul class="main-menu">
+        <li> File
+          <ul>
+            <li id="newimage"> New Image </li>
+            <li id="importimage"> Import Image </li>
+            <li class="separator"></li>
+            <li id="previewimage"> Preview Image </li>
+            <li id="saveimage"> Save Image </li>
+            <li class="separator"></li>
+            <li id="exit"> Close (Bye Bye)  </li>
+          </ul>
+        </li>
+        <li> Edit
+          <ul>
+            <li id="mundo"> Undo  <span>Ctrl+Z</span></li>
+            <li id="mredo"> Redo  <span>Ctrl+Shift+Z</span></li>
+            <li class="separator"></li>
+            <li id="mdel"> Delete  <span>DEL</span></li>
+            <li class="separator"></li>
+            <li id="mchangesize"> Change Image Resolution/Size </li>
+            <li id="minversesize"> Invese Image Resolution/Size </li>
+          </ul>
+        </li>
+        <li> Insert
+          <ul>
+            <li id="minserttext"> Insert Text  </li>
+            <li id="minsertimage"> Insert Image  </li>
+          </ul>
+        </li>
+        <li> Help
+          <ul>
+            <li id="mabout"> Visit Website  <span>F1</span></li>
+          </ul>
+        </li>
+        <small class="right" id="info"></small>
+      </ul>
+    </div>
+
+    <div class="container-fluid full">
+        <div class="row equal">
+            <div id="leftp" class="col-lg-3">
+                <div class="panel">
+                    <div class="clearfix">
+                    <div class="left">
+                    <span id="drawing-mode"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTUwNS4wMjUsMTkuNTQ5Yy0xNC42ODgtMTQuNjg2LTQ0LjE0Ni02LjMwNy05Mi43MDgsMjYuMzc3Yy00MS4yNTQsMjcuNzY2LTkwLjczOCw2OS44MTktMTM5LjMzNiwxMTguNDE3ICAgIGMtNzIuMDQ3LDcyLjA0Ni0xMjYuODIzLDE0Mi43ODQtMTQ1LjA2MSwxODYuNDU4Yy0zLjAwMi0xLjA4OC02LjExNS0xLjk1OC05LjMyNy0yLjU5M2MtMTguODcyLTMuNzMzLTM5LjM2OSwxLjA0LTU2LjIzOCwxMy4wODYgICAgYy0yNC4yMDcsMTcuMjg2LTMwLjYxOCw0MS45NzEtMzEuNTQ5LDQ2LjEzMmMtNS4wOTYsMTkuMDMyLTE0Ljc0NywzNy4xOTEtMjcuOTIxLDUyLjUyOWMtNC4yMzcsNC45MzMtMy43NTMsMTIuMzQ5LDEuMDksMTYuNjkxICAgIGMxNi45MjcsMTUuMTcsMzguNTgsMjIuNzc5LDYxLjEwMiwyMi43NzljMjEuNzA2LDAsNDQuMjItNy4wNjksNjQuMDc3LTIxLjI0OWM5LjMxMS02LjY0OSwxNi4zNi0xNC4wMDEsMTcuNzI1LTE1LjQ1NiAgICBjMTYuODcyLTE4LjEzMSwyNC4wMzYtNDEuOTA0LDIwLjQ4Mi02My42MjVjNDIuODUtMTUuMzYxLDExNy41NTMtNzIuMTgxLDE5Mi44NzEtMTQ3LjQ5OSAgICBjNDguNTk4LTQ4LjU5OCw5MC42NTItOTguMDgzLDExOC40MTctMTM5LjMzNkM1MTEuMzMyLDYzLjY5Niw1MTkuNzEzLDM0LjIzOCw1MDUuMDI1LDE5LjU0OXogTTEyOS4zOTIsNDQ2LjQxNSAgICBjLTAuNjQyLDAuNjg1LTYuNDk1LDYuODUyLTE0LjEzLDEyLjMwMmMtMjcuNzMyLDE5LjgtNjEuNjg0LDIyLjA5LTg2LjM0NSw2Ljg0NWMxMS41NDktMTUuODM0LDIwLjEzMi0zMy42ODMsMjUuMDYzLTUyLjI1NCAgICB2LTAuMDAxYzAuMDU1LTAuMjA4LDAuMTA1LTAuNDE4LDAuMTQ5LTAuNjNjMC4wNDEtMC4xODksNC4xOTMtMTkuMTI3LDIyLjExOS0zMS45MjdjMTEuNTMtOC4yMzUsMjUuMjc3LTExLjU0NywzNy43MTEtOS4wODkgICAgYzEwLjI1NSwyLjAyNiwxOC44NzYsNy44OCwyNC4yNzUsMTYuNDhDMTQ4LjgyOSw0MDUuMDE4LDE0NS4xMDQsNDI5LjUzMiwxMjkuMzkyLDQ0Ni40MTV6IE0xNTkuMjE3LDM3Ni42NjMgICAgYy0wLjI0NS0wLjQxLTMuODctNy43Ny0xMC42MjQtMTMuMjRjNS44MTktMTUuNTU3LDE4LjM0Ni0zNi41ODQsMzUuODA2LTYwLjcyOWwzNy40NTUsMzcuNDU1ICAgIEMxOTUuNTA1LDM1OS4xMTYsMTczLjkxNCwzNzEuNDgsMTU5LjIxNywzNzYuNjYzeiBNMjQxLjE5OCwzMjUuNjg1bC00Mi4zMDEtNDIuMzAxYzcuMzEtOS40MSwxNS4yMTktMTkuMTU3LDIzLjY0OC0yOS4xMjcgICAgbDQ3LjgwNiw0Ny44MDZDMjYwLjIzMywzMTAuNjA4LDI1MC40ODksMzE4LjQ5MywyNDEuMTk4LDMyNS42ODV6IE00NTUuMTU5LDEwNC4yNjZjLTI2LjkyNiwzOC45MTYtNjYuNjQzLDg1LjIzNS0xMTEuODMyLDEzMC40MjIgICAgYy0xOC45NzMsMTguOTczLTM3LjM2NywzNi4yMzItNTQuODQ0LDUxLjY5NGwtNTAuMjU3LTUwLjI1N2MxNS45NC0xOC4wMzIsMzMuMzItMzYuNTM4LDUxLjY2MS01NC44NzcgICAgYzQ1LjE4OC00NS4xODksOTEuNTA3LTg0LjkwNSwxMzAuNDIyLTExMS44MzRjNDcuOTE2LTMzLjE1NSw2NC40NS0zMy4yMDgsNjcuNjI2LTMyLjc3NCAgICBDNDg4LjM3MSwzOS44MTMsNDg4LjMxMyw1Ni4zNTMsNDU1LjE1OSwxMDQuMjY2eiIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTExOS4yNTYsNDE0LjExOWMtNS43ODMtMy4xODMtMTMuMDUyLTEuMDc2LTE2LjIzNiw0LjcwOGMtMC4zMjIsMC41ODUtMC43MTEsMS4xMzItMS4xNTgsMS42MjYgICAgYy0wLjg5NCwwLjkzLTMuODMyLDMuNzctNi44ODQsNS45NTFjLTQuNjMsMy4zMDUtOS42MjYsNS42NzQtMTQuODUsNy4wNDFjLTYuMzg3LDEuNjcxLTEwLjIwOSw4LjIwMy04LjUzOCwxNC41OSAgICBjMS40MDYsNS4zNzIsNi4yNSw4LjkzLDExLjU1NSw4LjkzYzEuMDAyLDAsMi4wMTktMC4xMjcsMy4wMzQtMC4zOTFjOC4wNDktMi4xMDYsMTUuNjg0LTUuNzEsMjIuNjkzLTEwLjcxNCAgICBjNC40OTktMy4yMTMsMTAuNDcxLTkuMDk1LDEwLjUxMi05LjE0YzEuNzc3LTEuOTI3LDMuMzE5LTQuMDY5LDQuNTgzLTYuMzY2QzEyNy4xNDksNDI0LjU3LDEyNS4wNCw0MTcuMzAxLDExOS4yNTYsNDE0LjExOXoiIGZpbGw9IiMwMDAwMDAiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" /></span>
+                    <span id="addtext"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTEuOTk5IDUxMS45OTkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMS45OTkgNTExLjk5OTsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI2NHB4IiBoZWlnaHQ9IjY0cHgiPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik01MDkuMzQsMjgyLjE0NGwtMjMuODkyLTIzLjg5MmMtMS43MDQtMS43MDQtNC4wMTQtMi42NjEtNi40MjQtMi42NjFzLTQuNzE5LDAuOTU3LTYuNDI0LDIuNjYxbC02Ljg2MSw2Ljg2MiAgICBsLTExLjU4LTExLjU4Yy00Ljg3LTQuODctOC4yNDUtMTAuODY2LTkuMjU3LTE2LjQ1MWMtMy4xODctMTcuNTgzLTE4LjM1NC0zNC4xMjMtMzYuMDY0LTM5LjMyN2wtOTYuNzE5LTI4LjQxOVY5NC45MyAgICBjMC01LjAxNy00LjA2Ni05LjA4NC05LjA4NC05LjA4NGgtNjMuNzU4Yy01LjAxOCwwLTkuMDg0LDQuMDY3LTkuMDg0LDkuMDg0djMyMi4xMzljMCw1LjAxNyw0LjA2Niw5LjA4NCw5LjA4NCw5LjA4NGg2Ni43NTMgICAgdjU1LjY1N0gxNjEuODI1Yy01LjAxOCwwLTkuMDg0LDQuMDY3LTkuMDg0LDkuMDg0czQuMDY2LDkuMDg0LDkuMDg0LDkuMDg0aDE1My4yODljNS4wMTgsMCw5LjA4NC00LjA2Nyw5LjA4NC05LjA4NHYtNzMuODI0ICAgIGMwLTUuMDE3LTQuMDY2LTkuMDg0LTkuMDg0LTkuMDg0aC02Ni43NTNWMTA0LjAxM2g0NS41OTF2NzIuMTIyYzAsMC4wMjcsMC4wMDQsMC4wNTMsMC4wMDQsMC4wODFjMCwwLjA4NCwwLjAxLDAuMTY3LDAuMDEyLDAuMjUyICAgIGMwLjAxMSwwLjI5NywwLjAzNCwwLjU4OSwwLjA3MywwLjg3N2MwLjAxMywwLjA5OCwwLjAyOCwwLjE5NSwwLjA0NSwwLjI5M2MwLjA1NSwwLjMyOCwwLjEyNSwwLjY1MiwwLjIxNCwwLjk2OCAgICBjMC4wMDgsMC4wMywwLjAxMSwwLjA2MSwwLjAyMSwwLjA5MWwwLjAyNSwwLjA4N2MwLjAwOCwwLjAyNywwLjAxNSwwLjA1MywwLjAyMywwLjA4bDMwLjI4NywxMDMuMDc1ICAgIGM1LjIwNCwxNy43MTIsMjEuNzQ0LDMyLjg3OCwzOS4zMjcsMzYuMDYzYzUuNTgzLDEuMDExLDExLjU4MSw0LjM4NiwxNi40NTEsOS4yNTdsMTEuNTgsMTEuNTgxbC02Ljg2Miw2Ljg2MiAgICBjLTMuNTQ3LDMuNTQ3LTMuNTQ3LDkuMjk4LDAsMTIuODQ1bDIzLjg5MSwyMy44OTJjMS43MDQsMS43MDQsNC4wMTQsMi42NjEsNi40MjQsMi42NjFzNC43MTktMC45NTcsNi40MjQtMi42NjFsODcuNDQ5LTg3LjQ0OSAgICBjMS43MDMtMS43MDMsMi42Ni00LjAxNCwyLjY2LTYuNDIzUzUxMS4wNDMsMjgzLjg0Nyw1MDkuMzQsMjgyLjE0NHogTTM2Ny4yMjMsMzAwLjEyN2MtMTAuODMtMS45NjItMjEuODcxLTEyLjIwMS0yNS4xMzYtMjMuMzEgICAgbC0yMC4yOTktNjkuMDg1bDM2LjQxNCwzNi40MTRjLTEuNDgsMy4yNzktMi4yODQsNi44NTEtMi4yODQsMTAuNTU2YzAsNi44NjEsMi42NzMsMTMuMzEyLDcuNTI0LDE4LjE2MyAgICBjNC44NTIsNC44NTIsMTEuMzAyLDcuNTI0LDE4LjE2NCw3LjUyNGM2Ljg2MSwwLDEzLjMxMi0yLjY3MiwxOC4xNjMtNy41MjRjNC44NTEtNC44NTIsNy41MjQtMTEuMzAyLDcuNTI0LTE4LjE2MyAgICBzLTIuNjczLTEzLjMxMi03LjUyNC0xOC4xNjNjLTQuODUyLTQuODUyLTExLjMwMi03LjUyNC0xOC4xNjMtNy41MjRjLTMuNzA1LDAtNy4yNzksMC44MDMtMTAuNTU2LDIuMjgzbC0zNi40MTMtMzYuNDEzICAgIGw2OS4wODIsMjAuMjk5YzExLjEwOSwzLjI2NCwyMS4zNDgsMTQuMzA2LDIzLjMxLDI1LjEzNmMxLjY4LDkuMjcxLDYuNzUzLDE4LjUyNiwxNC4yODcsMjYuMDU5bDExLjU4LDExLjU4bC00OC4wMzMsNDguMDMzICAgIGwtMTEuNTgtMTEuNThDMzg1Ljc0OCwzMDYuODgxLDM3Ni40OTQsMzAxLjgwNiwzNjcuMjIzLDMwMC4xMjd6IE0zNzQuMDg1LDI1NC43MDNjMC0yLjAwOCwwLjc4Mi0zLjg5NiwyLjIwMy01LjMxNyAgICBjMS40MTktMS40MTksMy4zMDktMi4yMDIsNS4zMTctMi4yMDJzMy44OTcsMC43ODIsNS4zMTcsMi4yMDJjMS40MjEsMS40MjEsMi4yMDMsMy4zMDksMi4yMDMsNS4zMTcgICAgYzAsMi4wMDgtMC43ODIsMy44OTYtMi4yMDMsNS4zMTdjLTEuNDE5LDEuNDE5LTMuMzA4LDIuMjAyLTUuMzE3LDIuMjAyYy0yLjAwOSwwLTMuODk3LTAuNzgyLTUuMzE3LTIuMjAyICAgIEMzNzQuODY3LDI1OC42LDM3NC4wODUsMjU2LjcxMiwzNzQuMDg1LDI1NC43MDN6IE00MTUuNDY3LDM2My4xN2wtMTEuMDQ0LTExLjA0Nmw3NC42MDMtNzQuNjAzbDExLjA0NiwxMS4wNDZMNDE1LjQ2NywzNjMuMTd6IiBmaWxsPSIjMDAwMDAwIi8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMzc2Ljg2LDEyLjAyMkg5LjA4NEM0LjA2NiwxMi4wMjIsMCwxNi4wODksMCwyMS4xMDZ2MTU1LjAzYzAsNS4wMTcsNC4wNjYsOS4wODQsOS4wODQsOS4wODRoNzMuODI0ICAgIGM1LjAxOCwwLDkuMDg0LTQuMDY3LDkuMDg0LTkuMDg0di03Mi4xMjJoNDYuMjYxdjMwMy45NzJINzAuODI4Yy01LjAxOCwwLTkuMDg0LDQuMDY3LTkuMDg0LDkuMDg0djczLjgyNCAgICBjMCw1LjAxNyw0LjA2Niw5LjA4NCw5LjA4NCw5LjA4NGg0NC45NzRjNS4wMTgsMCw5LjA4NC00LjA2Nyw5LjA4NC05LjA4NHMtNC4wNjYtOS4wODQtOS4wODQtOS4wODRINzkuOTExdi01NS42NTdoNjcuNDI0ICAgIGM1LjAxOCwwLDkuMDg0LTQuMDY3LDkuMDg0LTkuMDg0Vjk0LjkzYzAtNS4wMTctNC4wNjYtOS4wODQtOS4wODQtOS4wODRIODIuOTA3Yy01LjAxOCwwLTkuMDg0LDQuMDY3LTkuMDg0LDkuMDg0djcyLjEyMkgxOC4xNjcgICAgVjMwLjE5aDM0OS42MDlWNTcuNTljMCw1LjAxNyw0LjA2Niw5LjA4NCw5LjA4NCw5LjA4NHM5LjA4NC00LjA2Nyw5LjA4NC05LjA4NFYyMS4xMDYgICAgQzM4NS45NDMsMTYuMDg5LDM4MS44NzgsMTIuMDIyLDM3Ni44NiwxMi4wMjJ6IiBmaWxsPSIjMDAwMDAwIi8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" /></span>
+                    <span id="addimage"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQxOS4yIDQxOS4yIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MTkuMiA0MTkuMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI2NHB4IiBoZWlnaHQ9IjY0cHgiPgo8Zz4KCTxnPgoJCTxnPgoJCQk8Y2lyY2xlIGN4PSIxNTgiIGN5PSIxNDQuNCIgcj0iMjguOCIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMzk0LjQsMjUwLjRjLTEzLjYtMTIuOC0zMC44LTIxLjItNDkuNi0yMy42VjgwLjRjMC0xNS42LTYuNC0yOS42LTE2LjQtNDBDMzE4LDMwLDMwNCwyNCwyODguNCwyNGgtMjMyICAgICBjLTE1LjYsMC0yOS42LDYuNC00MCwxNi40QzYsNTAuOCwwLDY0LjgsMCw4MC40djE4NC40VjI4MnYzNy4yYzAsMTUuNiw2LjQsMjkuNiwxNi40LDQwYzEwLjQsMTAuNCwyNC40LDE2LjQsNDAsMTYuNGgyMjQuNCAgICAgYzE0LjgsMTIsMzMuMiwxOS42LDUzLjYsMTkuNmMyMy42LDAsNDQuOC05LjYsNjAtMjQuOGMxNS4yLTE1LjIsMjQuOC0zNi40LDI0LjgtNjBDNDE5LjIsMjg2LjgsNDA5LjYsMjY1LjYsMzk0LjQsMjUwLjR6ICAgICAgTTIxLjIsODAuNGMwLTkuNiw0LTE4LjQsMTAuNC0yNC44YzYuNC02LjQsMTUuMi0xMC40LDI0LjgtMTAuNGgyMzJjOS42LDAsMTguNCw0LDI0LjgsMTAuNGM2LjQsNi40LDEwLjQsMTUuMiwxMC40LDI0Ljh2MTI0LjggICAgIGwtNTkuMi01OC44Yy00LTQtMTAuOC00LjQtMTUuMiwwTDE2MCwyMzZsLTYwLjQtNjAuOGMtNC00LTEwLjgtNC40LTE1LjIsMGwtNjMuMiw2NFY4MC40eiBNNTYsMzU0Ljh2LTAuNCAgICAgYy05LjYsMC0xOC40LTQtMjQuOC0xMC40Yy02LTYuNC0xMC0xNS4yLTEwLTI0LjhWMjgydi0xMi44TDkyLjQsMTk4bDYwLjQsNjAuNGM0LDQsMTAuOCw0LDE1LjIsMGw4OS4yLTg5LjZsNTguNCw1OC44ICAgICBjLTEuMiwwLjQtMi40LDAuOC0zLjYsMS4yYy0xLjYsMC40LTMuMiwwLjgtNS4yLDEuNmMtMS42LDAuNC0zLjIsMS4yLTQuOCwxLjZjLTEuMiwwLjQtMiwwLjgtMy4yLDEuNmMtMS42LDAuOC0yLjgsMS4yLTQsMiAgICAgYy0yLDEuMi00LDIuNC02LDMuNmMtMS4yLDAuOC0yLDEuMi0zLjIsMmMtMC44LDAuNC0xLjIsMC44LTIsMS4yYy0zLjYsMi40LTYuOCw1LjItOS42LDguNGMtMTUuMiwxNS4yLTI0LjgsMzYuNC0yNC44LDYwICAgICBjMCw2LDAuOCwxMS42LDIsMTcuNmMwLjQsMS42LDAuOCwyLjgsMS4yLDQuNGMxLjIsNCwyLjQsOCw0LDEydjAuNGMxLjYsMy4yLDMuMiw2LjgsNS4yLDkuNkg1NnogTTM3OC44LDM1NS4yICAgICBjLTExLjYsMTEuNi0yNy4yLDE4LjQtNDQuOCwxOC40Yy0xNi44LDAtMzIuNC02LjgtNDMuNi0xNy42Yy0xLjYtMS42LTMuMi0zLjYtNC44LTUuMmMtMS4yLTEuMi0yLjQtMi44LTMuNi00ICAgICBjLTEuNi0yLTIuOC00LjQtNC02LjhjLTAuOC0xLjYtMS42LTIuOC0yLjQtNC40Yy0wLjgtMi0xLjYtNC40LTItNi44Yy0wLjQtMS42LTEuMi0zLjYtMS42LTUuMmMtMC44LTQtMS4yLTguNC0xLjItMTIuOCAgICAgYzAtMTcuNiw3LjItMzMuMiwxOC40LTQ0LjhjMTEuNi0xMS42LDI3LjItMTguNCw0NC44LTE4LjRjMTcuNiwwLDMzLjIsNy4yLDQ0LjgsMTguNGMxMS42LDExLjIsMTguNCwyNy4yLDE4LjQsNDQuOCAgICAgQzM5Ny4yLDMyOCwzOTAsMzQzLjYsMzc4LjgsMzU1LjJ6IiBmaWxsPSIjMDAwMDAwIi8+CgkJCTxwYXRoIGQ9Ik0zNjguOCwyOTkuNmgtMjQuNHYtMjQuNGMwLTYtNC44LTEwLjgtMTAuOC0xMC44cy0xMC44LDQuOC0xMC44LDEwLjh2MjQuNGgtMjQuNGMtNiwwLTEwLjgsNC44LTEwLjgsMTAuOCAgICAgczQuOCwxMC44LDEwLjgsMTAuOGgyNC40djI0LjRjMCw2LDQuOCwxMC44LDEwLjgsMTAuOHMxMC44LTQuOCwxMC44LTEwLjh2LTI0LjRoMjQuNGM2LDAsMTAuOC00LjgsMTAuOC0xMC44ICAgICBTMzc0LjgsMjk5LjYsMzY4LjgsMjk5LjZ6IiBmaWxsPSIjMDAwMDAwIi8+CgkJPC9nPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></span>
+                    <input type="file" id="uploadimage">
+                    </div>
+                    <div class="right">
+                    <span id="colorpicker"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ2NC43MzYgNDY0LjczNiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDY0LjczNiA0NjQuNzM2OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCI+CjxnPgoJPHBhdGggZD0iTTQ0Ni41OTgsMTguMTQzYy0yNC4xODMtMjQuMTg0LTYzLjM5My0yNC4xOTEtODcuNTkyLTAuMDA4bC0xNi43MTcsMTYuNzE3Yy04Ljk4LTguOTc5LTIzLjUyNS04Ljk3OS0zMi41MDQsMCAgIGMtOC45ODEsOC45NzItOC45ODEsMjMuNTMzLDAsMzIuNTA1bDUuNDE2LDUuNDE5TDEzNC42MTMsMjUzLjM3N2gtMC4wMTZsLTYyLjY4NSw2Mi42OTFjLTQuOTgyLDQuOTgyLTcuOTE5LDExLjY0Ni04LjIzNSwxOC42ODQgICBsLTAuMTUsMy4zNDRjMCwwLjAxNiwwLDAuMDMsMCwwLjA0NmwtMi41MjksNTYuNzA0Yy0wLjEwNCwyLjYzMywwLjg4Myw1LjE4NSwyLjczOSw3LjA0OGMxLjc1MSwxLjc1OSw0LjE0NSwyLjczOCw2LjYzLDIuNzM4ICAgYzAuMTM1LDAsMC4yNjksMCwwLjQyLTAuMDA4bDMwLjA2NC0xLjMzMWgwLjAxNmwxOC4zMTgtMC44MTVsOC4zMTgtMC4zNjZjOS4yMDMtMC40MTIsMTcuOTQ0LTQuMjU5LDI0LjQ2OS0xMC43NzZsMjQwLjg5OC0yNDAuODkxICAgbDQuNTA2LDQuNTA1YzQuNDksNC40ODgsMTAuMzcyLDYuNzMzLDE2LjI1Miw2LjczM2M1Ljg4MSwwLDExLjc2NC0yLjI0NSwxNi4yNTMtNi43MzNjOC45OC04Ljk3Myw4Ljk4LTIzLjUzNCwwLTMyLjUwNSAgIGwxNi43MTYtMTYuNzE4QzQ3MC43ODIsODEuNTQ0LDQ3MC43ODIsNDIuMzM0LDQ0Ni41OTgsMTguMTQzeiBNMjcyLjYzOSwyMjcuMzNsLTg0LjYsMTUuOTZsMTM3Ljk5OC0xMzguMDA0bDM0LjMzMiwzNC4zMTYgICBMMjcyLjYzOSwyMjcuMzN6IiBmaWxsPSIjMDAwMDAwIi8+Cgk8cGF0aCBkPSJNNjQuNSw0MjMuODcyYy0zNS42MTcsMC02NC41LDkuMTQ1LTY0LjUsMjAuNDM1YzAsMTEuMjg0LDI4Ljg4MywyMC40MjgsNjQuNSwyMC40MjhzNjQuNDg2LTkuMTQzLDY0LjQ4Ni0yMC40MjggICBDMTI4Ljk4Niw0MzMuMDE2LDEwMC4xMTcsNDIzLjg3Miw2NC41LDQyMy44NzJ6IiBmaWxsPSIjMDAwMDAwIi8+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" /></span><small id="status">transparent</small>
+                    </div>
+                    </div>
+                    <div class="mt-4">
+                        <hr>
+                        <button class="realcolorswitch nocolor"></button>
+                        <button class="realcolorswitch color2"></button>
+                        <button class="realcolorswitch color3"></button>
+                        <button class="realcolorswitch color1"></button>
+                        <button class="realcolorswitch color4"></button>
+                        <button class="realcolorswitch color5"></button>
+                        <button class="realcolorswitch color6"></button>
+                        <button class="realcolorswitch color0"></button>
+                    </div>
+                    <hr>
+                    <div class="intro">
+                        <h4>Simple Image Editor</h4>
+                        <p>Choose in the toolbar how you want to edit your image.
+                        It's easy and fast to resize, add text to your image or even add external images to your image.</p>
+                        <p>made with &hearts; by abdelhafidh.com</p>
+                    </div>
+                    <div class="input-group">
+                    <div class="input-group mb-3 draw">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="drawing-mode-selector">Draw mode</label>
+                        </div>
+                        <select class="custom-select" id="drawing-mode-selector">
+                          <option>Pencil</option>
+                          <option>Circle</option>
+                          <option>Spray</option>
+                          <option>Pattern</option>
+                    
+                          <option>hline</option>
+                          <option>vline</option>
+                          <option>square</option>
+                          <option>diamond</option>
+                          <option>texture</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-1 draw">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="drawing-line-width">Line width</label>
+                      </div>
+                       <input type="range" class="form-control" min="0" max="150" value="20" id="drawing-line-width">
+                    </div>
+                    <div class="input-group mb-3 draw">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="drawing-line-width">Line color</label>
+                      </div>
+                       <input type="color" class="form-control" value="#005E7A" id="drawing-color">
+                    </div>
+                    <div class="input-group mb-1 draw">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="drawing-line-width">Shadow width</label>
+                      </div>
+                       <input type="range" class="form-control" min="0" max="50" value="0" id="drawing-shadow-width">
+                    </div>
+                    <div class="input-group mb-1 draw">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="drawing-line-width">Shadow offset</label>
+                      </div>
+                       <input type="range" class="form-control" min="0" max="50" value="0" id="drawing-shadow-offset">
+                    </div>
+                    <div class="input-group mb-3 draw">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="drawing-line-width">Shadow color</label>
+                      </div>
+                       <input type="color" class="form-control" value="#005E7A" id="drawing-shadow-color">
+                    </div>
+                    
+                      <div class="input-group mb-1 text">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text" for="fontfamily">Font Family</label>
+                          </div>
+                          <select class="custom-select" id="fontfamily"></select>
+                      </div>
+                      <div class="input-group mb-1 text">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text" for="fontfamily">Font Style</label>
+                          </div>
+                          <select class="custom-select" id="fontstyle">
+                             <option>normal</option>
+                             <option>italic</option>
+                             <option>oblique</option>
+                          </select>
+                      </div>
+                      <div class="input-group mb-3 text">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text" for="fontsize">Font Size</label>
+                          </div>
+                           <input type="range" class="form-control" value="50" id="fontsize">
+                      </div>
+                      <div class="input-group mb-3 text">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text" for="fontsize">Align</label>
+                          </div>
+                           <select class="custom-select" id="align">
+                             <option>left</option>
+                             <option>center</option>
+                             <option>right</option>
+                             <option>justify</option>
+                             <option>justify-left</option>
+                             <option>justify-center</option>
+                             <option>justify-right</option>
+                           </select>
+                      </div>
+                      <div class="input-group mb-1 text">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text" for="fontcolor">Font Color</label>
+                          </div>
+                          <input type="color" class="form-control" value="#000000" id="fontcolor">
+                      </div>
+                      <div class="input-group mb-1 text">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text" for="fontcolor">Background Color</label>
+                          </div>
+                          <input type="color" class="form-control" value="#FFFFFF" id="backgroundcolor">
+                      </div>
+                      <div class="custom-control custom-checkbox text">
+                        <input type="checkbox" class="custom-control-input" id="backgroundcolorchk" checked>
+                        <label class="custom-control-label" for="backgroundcolorchk">Transparent Background</label>
+                      </div>
+                    </div>
+                    <div class="mt-5"></div>
+                    <div class="setting">
+                        <button class="btn btn-success mb-1" id="changesize"><i class="fas fa-wrench"></i></button>
+                        <button class="btn btn-warning mb-1" id="inversesize"><i class="fas fa-retweet"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10 col-lg-8" id="panel">
+                <table class="selecto" id="selecto">
+                 <tr>
+                    <td><span class="d-none d-md-inline text-light">UNDO</span><button id="undo" class="btn" disabled><i class="text-ylw fas fa-undo fs50"></i></button></td>
+                    <td><button id="redo" class="btn" disabled><i class="text-ylw fas fa-redo fs50"></i></button><span class="d-none d-md-inline text-light">REDO</span></td>
+                    <td><button type="button" id="clear-canvas" class="btn btn-select btn-lg">Clear</button></td>
+                    <td><button type="button" id="preview" class="btn btn-select btn-lg">Preview</button></td>
+                    <td><a type="button" id="save" download="canvas.png" class="btn btn-select btn-lg">Save</a></td>
+                 </tr>
+                </table>
+                
+                <div id="prearea">
+                    <div id="area">
+                            <canvas id="c" width="820px" height="428px"></canvas>
+                    </div>
+                </div>
+                <div id="filters" class="carousel slide" data-wrap="true" data-interval="false">
+                    <ol class="carousel-indicators cindct">
+                        <li data-target="#filters" data-slide-to="0" class="active"></li>
+                        <li data-target="#filters" data-slide-to="1"></li>
+                        <li data-target="#filters" data-slide-to="2"></li>
+                        <li data-target="#filters" data-slide-to="3"></li>
+                        <li data-target="#filters" data-slide-to="4"></li>
+                        <li data-target="#filters" data-slide-to="5"></li>
+                        <li data-target="#filters" data-slide-to="6"></li>
+                        <li data-target="#filters" data-slide-to="7"></li>
+                        <li data-target="#filters" data-slide-to="8"></li>
+                        <li data-target="#filters" data-slide-to="9"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <button class="btn filter" id="juno">juno</button>
+                            <button class="btn filter" id="amaro">amaro</button>
+                            <button class="btn filter" id="sierra">sierra</button>
+                            <button class="btn filter" id="stinson">stinson</button>
+                        </div>
+                        <div class="carousel-item">
+                            <button class="btn filter" id="walden">walden</button>
+                            <button class="btn filter" id="willow">willow</button>
+                            <button class="btn filter" id="crema">crema</button>
+                            <button class="btn filter" id="helena">helena</button>
+                        </div>
+                        <div class="carousel-item">
+                            <button class="btn filter" id="brannan">brannan</button>
+                            <button class="btn filter" id="valencia">valencia</button>
+                            <button class="btn filter" id="reyes">reyes</button>
+                            <button class="btn filter" id="skyline">skyline</button>
+                        </div>
+                        <div class="carousel-item">
+                            <button class="btn filter" id="dogpatch">dogpatch</button>
+                            <button class="btn filter" id="clarendon">clarendon</button>
+                            <button class="btn filter" id="slumber">slumber</button>
+                            <button class="btn filter" id="mayfair">mayfair</button>
+                        </div>
+                        <div class="carousel-item">
+                            <button class="btn filter" id="vesper">vesper</button>
+                            <button class="btn filter f1977" id="1977">1977</button>
+                            <button class="btn filter" id="brooklyn">brooklyn</button>
+                            <button class="btn filter" id="gingham">gingham</button>
+                        </div>
+                        <div class="carousel-item">
+                            <button class="btn filter" id="rise">rise</button>
+                            <button class="btn filter" id="lofi">lofi</button>
+                            <button class="btn filter" id="earlybird">earlybird</button>
+                            <button class="btn filter" id="kelvin">kelvin</button>
+                        </div>
+                        <div class="carousel-item">
+                            <button class="btn filter" id="moon">moon</button>
+                            <button class="btn filter" id="ludwig">ludwig</button>
+                            <button class="btn filter" id="hudson">hudson</button>
+                            <button class="btn filter" id="inkwell">inkwell</button>
+                        </div>
+                        <div class="carousel-item">
+                            <button class="btn filter" id="maven">maven</button>
+                            <button class="btn filter" id="ashby">ashby</button>
+                            <button class="btn filter" id="lark">lark</button>
+                            <button class="btn filter" id="aden">aden</button>
+                        </div>
+                        <div class="carousel-item">
+                            <button class="btn filter" id="hefe">hefe</button>
+                            <button class="btn filter" id="sutro">sutro</button>
+                            <button class="btn filter" id="ginza">ginza</button>
+                            <button class="btn filter" id="charmes">charmes</button>
+                        </div>
+                        <div class="carousel-item">
+                            <button class="btn filter" id="perpetua">perpetua</button>
+                            <button class="btn filter" id="xpro2">xpro2</button>
+                            <button class="btn filter" id="nashville">nashville</button>
+                            <button class="btn filter" id="toaster">toaster</button>
+                        </div>  
+                    </div>
+                    <a class="carousel-control-prev blkbg" href="#filters" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next blkbg" href="#filters" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-2 col-lg-1" id="control">
+                <div class="panel p2">
+                    <button class="btn btn-dark mb-1" id="defaultpos"><i class="fas fa-search"></i></button>
+                    <button class="btn btn-dark mb-1" id="zoomin"><i class="fas fa-search-plus"></i></button>
+                    <button class="btn btn-dark mb-1" id="zoomout"><i class="fas fa-search-minus"></i></button>
+                <hr>
+                    <div id="joystick">
+                      <svg width="100%" height="100%" viewBox="0 0 100 100">
+                        <defs>
+                          <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgb(16,16,16);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgb(240,240,240);stop-opacity:1" />
+                          </linearGradient>
+                          <linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgb(240,240,240);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgb(16,16,16);stop-opacity:1" />
+                          </linearGradient>
+                          <linearGradient id="grad3" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgb(168,168,168);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgb(239,239,239);stop-opacity:1" />
+                          </linearGradient>
+                        </defs>
+                        <circle cx="50" cy="50" r="50" fill="url(#grad1)" />
+                        <circle cx="50" cy="50" r="47" fill="url(#grad2)" stroke="black" stroke-width="1.5px" />
+                        <circle cx="50" cy="50" r="44" fill="url(#grad3)" />
+                        <circle id="defaultpos2" cx="50" cy="50" r="20" fill="#cccccc" stroke="black" stroke-width="1px" />
+                        <path id="totop" d="M50,14 54,22 46,22Z" fill="rgba(0,0,0,0.8)" />
+                        <path id="tobottom" d="M50,86 54,78 46,78Z" fill="rgba(0,0,0,0.8)" />
+                        <path id="totheleft" d="M14,50 22,54 22,46Z" fill="rgba(0,0,0,0.8)" />
+                        <path id="totheright" d="M86,50 78,54 78,46Z" fill="rgba(0,0,0,0.8)" />
+                      </svg>
+                    </div>
+                <hr>
+                    <button class="colorswitch color2"></button>
+                    <button class="colorswitch color3"></button>
+                    <button class="colorswitch color1"></button>
+                    <button class="colorswitch color4"></button>
+                    <button class="colorswitch color5"></button>
+                    <button class="colorswitch color6"></button>
+                    <button class="colorswitch color0"></button>
+                </div>
+            </div>
+        </div>
+        <div id="fontpreview" title="Font Preview"></div>
+        <img class="d-none" id="imgtmp">
+        <span class="d-none" id="setwhasimagebtn"></span>
+        <input class="d-none" type="file" id="uploadimage2">
+        <span class="d-none" id="deletebtn"></span>
+    </div>
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script
+    			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+    			  crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.0.13/fontfaceobserver.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.2.4/fabric.min.js"></script>
+    <script>
+        function scale0(){
+            var realh = document.getElementById("c").getBoundingClientRect().height;
+            var realw = document.getElementById("c").getBoundingClientRect().width;
+            $( ".canvas-container" ).css( "height", realh );
+            $( ".canvas-container" ).css( "width", realw );
+        }
+        
+        function scale() {
+            var scaled = $("canvas");
+              parent = scaled.parent();
+              ratio1 = (parent.width() / scaled.width());
+              ratio2 = (parent.height() / scaled.height());
+              //padding = scaled.height() * ratio2;
+
+            scaled.css({
+              //'transform': 'scale(' + ratio1 + ', ' + ratio2 + ')',
+              'transform': 'scale(' + ratio1 + ')',
+              'transform-origin': 'top left'
+            });
+            //parent.css('padding-top', padding); // keeps the parent height in ratio to child resize
+        }
+        
+        function scale2(){
+            v=document.getElementById("c").getBoundingClientRect().height > (Number(document.getElementById("prearea").getBoundingClientRect().height));
+            w=document.getElementById("c").getBoundingClientRect().width > (Number(document.getElementById("prearea").getBoundingClientRect().width));
+            while(v==true){
+                var scaled = $("canvas");
+                var matrixRegex = /matrix\((-?\d*\.?\d+),\s*0,\s*0,\s*(-?\d*\.?\d+),\s*0,\s*0\)/;
+                var matches = scaled.css('transform').match(matrixRegex);
+                var ratio1 = matches[1];
+                var ratio2 = matches[2];
+                ratio1 = Number(ratio1) - Number((ratio1/10));
+                ratio2 = Number(ratio2) - Number((ratio2/10));
+                scaled.css({
+                  'transform': 'scale(' + ratio1 + ', ' + ratio2 + ')',
+                  'transform-origin': 'top left'
+                });
+                v=document.getElementById("c").getBoundingClientRect().height > (Number(document.getElementById("prearea").getBoundingClientRect().height));
+            }
+            while(w==true){
+                $("#zoomout").click();
+                w=document.getElementById("c").getBoundingClientRect().width > (Number(document.getElementById("prearea").getBoundingClientRect().width));
+            }
+        }
+        
+        function scale3(){
+            var left = ((document.getElementById("prearea").getBoundingClientRect().width)/2)-(parseFloat(document.getElementById("c").getBoundingClientRect().width)/2)-(parseFloat($("#area").css("padding-left")));
+            $("#area").css("left", left);
+        }
+        function scale4(){
+            var top = ((document.getElementById("prearea").getBoundingClientRect().height)/2)-(parseFloat(document.getElementById("c").getBoundingClientRect().height)/2)-(parseFloat($("#area").css("padding-left")));
+            $("#area").css("top", top);
+        }
+        
+        $("#defaultpos").click();
+        $(window).resize(function(){
+            $("#defaultpos").click();
+        }); 
+        
+        $("#area").on('wheel', function(event){
+        event.preventDefault();
+            
+        var scaled = $("canvas");
+        var matrixRegex = /matrix\((-?\d*\.?\d+),\s*0,\s*0,\s*(-?\d*\.?\d+),\s*0,\s*0\)/;
+        var matches = scaled.css('transform').match(matrixRegex);
+        var ratio1 = matches[1];
+        var ratio2 = matches[2];
+        
+          // deltaY obviously records vertical scroll, deltaX and deltaZ exist too
+          if(event.originalEvent.deltaY < 0){
+            // wheeled up
+            ratio1 = Number(ratio1) - Number((ratio1/25));
+            ratio2 = Number(ratio2) - Number((ratio2/25));
+          }
+          else {
+            // wheeled down
+            ratio1 = Number(ratio1) + Number((ratio1/25));
+            ratio2 = Number(ratio2) + Number((ratio2/25));
+          }
+          
+          scaled.css({
+            'transform': 'scale(' + ratio1 + ', ' + ratio2 + ')',
+            'transform-origin': 'top left'
+          });
+          scale0();
+          scale3();
+          scale4();
+        });
+    </script>
+    <script src="../js/editor.js"></script>
+    <script>
+        $( "#area" ).draggable({ cancel: "canvas" });
+    </script>
+    <script src="../js/controls.js"></script>
+    <script src="../js/filterous.min.js"></script>
+    <script src="../js/jquery.menu.js"></script>
+    <script>
+        $(window).on("load",function(){
+            var head = document.getElementsByTagName("head")[0],
+                cssLink = document.createElement("link");
+            
+            cssLink.href = "../css/filters.css";
+            cssLink.id="filters-css";
+            cssLink.rel="stylesheet";
+            
+            head.appendChild(cssLink);
+        });
+    </script>
+  </body>
+</html>
