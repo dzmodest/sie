@@ -1,5 +1,5 @@
 # SIE
-Simple Image Editor (JS) [LIVE DEMO](http://sie.abdelhafidh.com/)
+Simple Image Editor (JS)
 
 ## Features:
 This script was made by a request, thus the editor has only 2 main functions: add text, add image (+brush), however all other functions can be easily implemented, beside that here some other features
